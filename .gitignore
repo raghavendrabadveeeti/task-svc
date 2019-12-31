@@ -1,0 +1,15 @@
+.gradle
+.idea
+build
+classes
+temp
+out
+*.iml
+
+*.DS_Store
+bin/*
+.classpath
+.project
+.settings/*
+.vscode/*
+/target/
