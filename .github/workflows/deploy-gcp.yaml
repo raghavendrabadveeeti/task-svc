@@ -1,4 +1,4 @@
-name: Deploy Workflow
+name: GCP Deploy Workflow
 
 on:
   deployment:
@@ -8,7 +8,7 @@ env:
   PORT_TO_BE_EXPOSED: 8080
 
 jobs:
-  deploy:
+  deploy-to-gcp:
     runs-on: ubuntu-latest
     if: ${{ github.event.deployment.ref == 'master' }}
     environment:
