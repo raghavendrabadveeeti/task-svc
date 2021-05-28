@@ -1,0 +1,53 @@
+name: Deploy Workflow
+
+on:
+  deployment:
+
+env:
+  DOCKER_REPOSITORY: foodsvc
+  PORT_TO_BE_EXPOSED: 8080
+
+jobs:
+  deploy-to-stratosphere:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.deployment.ref == 'master' }}
+    environment:
+      name:  ${{ github.event.deployment.environment }}
+    steps:
+      - name: Load environment variables
+        run: |
+          echo "DEPLOYMENT_API=https://api.github.com/repos/${{ github.repository }}/deployments" >> $GITHUB_ENV
+          if [[ ${{ github.event.deployment.environment }} == "Dev" ]]; then
+          echo "DOCKER_REPOSITORY=task-dev" >> $GITHUB_ENV
+          echo "PROJECT_NAME=rgv-dev" >> $GITHUB_ENV
+
+          elif [[ ${{ github.event.deployment.environment }} == "QA" ]]; then
+          echo "DOCKER_REPOSITORY=task-qa" >> $GITHUB_ENV
+          echo "PROJECT_NAME=rgv-qa" >> $GITHUB_ENV
+
+          else
+          exit 1
+
+          fi
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+      - name: Trigger next deployment
+        run: |
+          if [[ ${{ github.event.deployment.environment }} == "Dev" ]]; then
+            echo 'Triggering QA Deployment'
+            curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" --data '{"ref":"master","environment":"QA","required_contexts":[]}' ${{ env.DEPLOYMENT_API }}
+
+          elif [[ ${{ github.event.deployment.environment }} == "QA" ]]; then
+            echo 'Triggering Prod Deployment'
+
+          fi
