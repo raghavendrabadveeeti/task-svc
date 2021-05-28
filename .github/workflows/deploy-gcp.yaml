@@ -8,7 +8,7 @@ env:
   PORT_TO_BE_EXPOSED: 8080
 
 jobs:
-  deploy-to-stratosphere:
+  deploy:
     runs-on: ubuntu-latest
     if: ${{ github.event.deployment.ref == 'master' }}
     environment:
