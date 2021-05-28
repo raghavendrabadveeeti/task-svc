@@ -1,7 +1,7 @@
 name: Deploy Workflow
 
 on:
-  deployment:
+  workflow_dispatch:
 
 env:
   DOCKER_REPOSITORY: foodsvc
