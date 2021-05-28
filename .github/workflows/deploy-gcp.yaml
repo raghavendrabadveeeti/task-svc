@@ -7,7 +7,6 @@ env:
   DOCKER_REPOSITORY: foodsvc
   PORT_TO_BE_EXPOSED: 8080
 
-
 jobs:
   deploy-to-stratosphere:
     runs-on: ubuntu-latest
