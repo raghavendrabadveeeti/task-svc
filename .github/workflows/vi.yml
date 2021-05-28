@@ -20,5 +20,6 @@ jobs:
     - name: Trigger Dev Deployment (if this is commit to master)
       if: ${{ github.ref == 'refs/heads/master' }}
       run: |
+         echo "GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}" 
          DEPLOYMENT_API="https://api.github.com/repos/${{ github.repository }}/deployments"
          curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -H "Content-Type: application/json" -d '{"ref":"master","environment":"Dev","required_contexts":[]}' "$DEPLOYMENT_API"
