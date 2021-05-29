@@ -19,9 +19,15 @@ jobs:
         distribution: 'adopt'
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    - name: Trigger Dev Deployment (if this is commit to master)
+    - name: Trigger GCP Dev Deployment (if this is commit to master)
       if: ${{ github.ref == 'refs/heads/master' }}
       run: |
          echo "GITHUB_TOKEN : ${{ secrets.DEPLOYMENT_API_TOKEN }}" 
          DEPLOYMENT_API="https://api.github.com/repos/${{ github.repository }}/deployments"
-         curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" -d '{"ref":"master","environment":"Dev","required_contexts":[]}' "$DEPLOYMENT_API"
+         curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" -d '{"ref":"master","environment":"GCP-Dev","required_contexts":[]}' "$DEPLOYMENT_API"
+   - name: Trigger Azure Dev Deployment (if this is commit to master)
+      if: ${{ github.ref == 'refs/heads/master' }}
+      run: |
+         echo "GITHUB_TOKEN : ${{ secrets.DEPLOYMENT_API_TOKEN }}" 
+         DEPLOYMENT_API="https://api.github.com/repos/${{ github.repository }}/deployments"
+         curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" -d '{"ref":"master","environment":"Azure-Dev","required_contexts":[]}' "$DEPLOYMENT_API"
