@@ -23,7 +23,7 @@ jobs:
           echo "DOCKER_REPOSITORY=task-dev" >> $GITHUB_ENV
           echo "PROJECT_NAME=rgv-dev" >> $GITHUB_ENV
 
-          elif [[ ${{ environment }} == "QA" ]]; then
+          elif [[ ${{ github.event.inputs.environment }} == "QA" ]]; then
           echo "DOCKER_REPOSITORY=task-qa" >> $GITHUB_ENV
           echo "PROJECT_NAME=rgv-qa" >> $GITHUB_ENV
 
