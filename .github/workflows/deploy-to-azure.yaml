@@ -11,8 +11,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: ${{ github.event.deployment.ref == 'master' }}
-    environment:
-      name:  ${{ github.event.deployment.environment }}
     steps:
       - name: Load environment variables
         run: |
