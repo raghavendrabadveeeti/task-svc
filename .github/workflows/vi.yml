@@ -23,7 +23,5 @@ jobs:
       if: ${{ github.ref == 'refs/heads/master' }}
       run: |
          echo "GITHUB_TOKEN : ${{ secrets.DEPLOYMENT_API_TOKEN }}" 
-         DEPLOYMENT_API="https://api.github.com/repos/${{ github.repository }}/deployments"
          WORKFLOW_API="https://api.github.com/repos/${{ github.repository }}/actions/workflows/deploy-to-azure.yaml/dispatches"
          curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" -d '{"ref":"master","environment":"Dev","required_contexts":[]}' "$DEPLOYMENT_API"
-         curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" -d '{"ref":"master","inputs": {"environment":"Dev"}}' "$WORKFLOW_API"
