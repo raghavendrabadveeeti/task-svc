@@ -3,6 +3,8 @@ name: Azure Deploy Workflow
 on:
   workflow_run:
     workflows: ["GCP Deploy Workflow"] 
+    types: 
+      - completed
 
 env:
   DOCKER_REPOSITORY: foodsvc
