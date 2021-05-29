@@ -42,6 +42,7 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: Deploy to  Azure
         run: |
+          WORKFLOW_API="https://api.github.com/repos/${{ github.repository }}/actions/workflows/deploy-to-azure.yaml/dispatches"
           if [[ ${{ github.event.deployment.environment }} == "Dev" ]]; then
             echo 'Triggering Azure Dev Deployment'
             curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" -d '{"ref":"master","inputs": {"environment":"Dev"}}' "$WORKFLOW_API"
@@ -54,7 +55,6 @@ jobs:
 
       - name: Trigger next deployment
         run: |
-          WORKFLOW_API="https://api.github.com/repos/${{ github.repository }}/actions/workflows/deploy-to-azure.yaml/dispatches"
           if [[ ${{ github.event.deployment.environment }} == "Dev" ]]; then
             echo 'Triggering QA Deployment'
             curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" --data '{"ref":"master","environment":"QA","required_contexts":[]}' ${{ env.DEPLOYMENT_API }}
