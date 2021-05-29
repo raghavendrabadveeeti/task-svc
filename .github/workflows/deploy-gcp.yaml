@@ -40,8 +40,21 @@ jobs:
           distribution: 'adopt'
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+      - name: Deploy to  Azure
+        run: |
+          if [[ ${{ github.event.deployment.environment }} == "Dev" ]]; then
+            echo 'Triggering Azure Dev Deployment'
+            curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" -d '{"ref":"master","inputs": {"environment":"Dev"}}' "$WORKFLOW_API"
+
+          elif [[ ${{ github.event.deployment.environment }} == "QA" ]]; then
+            echo 'Triggering Azure QA Deployment'
+            curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" -d '{"ref":"master","inputs": {"environment":"QA"}}' "$WORKFLOW_API"
+
+          fi
+
       - name: Trigger next deployment
         run: |
+          DEPLOYMENT_API="https://api.github.com/repos/${{ github.repository }}/deployments"
           if [[ ${{ github.event.deployment.environment }} == "Dev" ]]; then
             echo 'Triggering QA Deployment'
             curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" --data '{"ref":"master","environment":"QA","required_contexts":[]}' ${{ env.DEPLOYMENT_API }}
