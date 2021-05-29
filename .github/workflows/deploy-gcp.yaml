@@ -40,14 +40,3 @@ jobs:
           distribution: 'adopt'
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-
-      - name: Trigger next deployment
-        run: |
-          if [[ ${{ github.event.deployment.environment }} == "Dev" ]]; then
-            echo 'Triggering QA Deployment'
-            curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" --data '{"ref":"master","environment":"QA","required_contexts":[]}' ${{ env.DEPLOYMENT_API }}
-
-          elif [[ ${{ github.event.deployment.environment }} == "QA" ]]; then
-            echo 'Triggering Prod Deployment'
-
-          fi
