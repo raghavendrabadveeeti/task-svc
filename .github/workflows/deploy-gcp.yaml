@@ -54,7 +54,7 @@ jobs:
 
       - name: Trigger next deployment
         run: |
-          DEPLOYMENT_API="https://api.github.com/repos/${{ github.repository }}/deployments"
+          WORKFLOW_API="https://api.github.com/repos/${{ github.repository }}/actions/workflows/deploy-to-azure.yaml/dispatches"
           if [[ ${{ github.event.deployment.environment }} == "Dev" ]]; then
             echo 'Triggering QA Deployment'
             curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" --data '{"ref":"master","environment":"QA","required_contexts":[]}' ${{ env.DEPLOYMENT_API }}
