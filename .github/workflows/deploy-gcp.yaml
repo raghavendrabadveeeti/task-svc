@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.deployment.ref == 'master' }}
     environment:
-      name:  ${{ github.event.deployment.environment }}
+      name:  GCP - ${{ github.event.deployment.environment }}
     steps:
       - name: Load environment variables
         run: |
