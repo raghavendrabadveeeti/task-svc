@@ -16,7 +16,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.event.deployment.environment }}
+      name: ${{ github.event.inputs.environment }}
     steps:
       - name: Load environment variables
         run: |
