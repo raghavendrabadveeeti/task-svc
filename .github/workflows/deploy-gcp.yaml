@@ -44,7 +44,7 @@ jobs:
         run: |
           if [[ ${{ github.event.deployment.environment }} == "GCP-Dev" ]]; then
             echo 'Triggering QA Deployment'
-            curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" --data '{"ref":"master","environment":"QA","required_contexts":[]}' ${{ env.DEPLOYMENT_API }}
+            curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" --data '{"ref":"master","environment":"GCP-QA","required_contexts":[]}' ${{ env.DEPLOYMENT_API }}
 
           elif [[ ${{ github.event.deployment.environment }} == "GCP-QA" ]]; then
             echo 'Triggering Prod Deployment'
