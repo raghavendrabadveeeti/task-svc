@@ -17,11 +17,11 @@ jobs:
       - name: Load environment variables
         run: |
           echo "DEPLOYMENT_API=https://api.github.com/repos/${{ github.repository }}/deployments" >> $GITHUB_ENV
-          if [[ ${{ github.event.deployment.environment }} == "GCP-Dev" ]]; then
+          if [[ ${{ github.event.deployment.environment }} == "Dev" ]]; then
           echo "DOCKER_REPOSITORY=task-dev" >> $GITHUB_ENV
           echo "PROJECT_NAME=rgv-dev" >> $GITHUB_ENV
 
-          elif [[ ${{ github.event.deployment.environment }} == "GCP-QA" ]]; then
+          elif [[ ${{ github.event.deployment.environment }} == "QA" ]]; then
           echo "DOCKER_REPOSITORY=task-qa" >> $GITHUB_ENV
           echo "PROJECT_NAME=rgv-qa" >> $GITHUB_ENV
 
@@ -42,11 +42,11 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: Trigger next deployment
         run: |
-          if [[ ${{ github.event.deployment.environment }} == "GCP-Dev" ]]; then
+          if [[ ${{ github.event.deployment.environment }} == "Dev" ]]; then
             echo 'Triggering QA Deployment'
             curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" --data '{"ref":"master","environment":"GCP-QA","required_contexts":[]}' ${{ env.DEPLOYMENT_API }}
 
-          elif [[ ${{ github.event.deployment.environment }} == "GCP-QA" ]]; then
+          elif [[ ${{ github.event.deployment.environment }} == "QA" ]]; then
             echo 'Triggering Prod Deployment'
 
           fi
