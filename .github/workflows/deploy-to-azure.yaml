@@ -2,6 +2,11 @@ name: Azure Deploy Workflow
 
 on:
   workflow_dispatch:
+   inputs:
+      environment:
+        description: 'Dev QA Prod'
+        required: true
+        default: 'Dev'
 
 env:
   DOCKER_REPOSITORY: foodsvc
@@ -10,16 +15,15 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ github.event.deployment.ref == 'master' }}
     steps:
       - name: Load environment variables
         run: |
           echo "DEPLOYMENT_API=https://api.github.com/repos/${{ github.repository }}/deployments" >> $GITHUB_ENV
-          if [[ ${{ github.event.deployment.environment }} == "Dev" ]]; then
+          if [[ ${{ environment }} == "Dev" ]]; then
           echo "DOCKER_REPOSITORY=task-dev" >> $GITHUB_ENV
           echo "PROJECT_NAME=rgv-dev" >> $GITHUB_ENV
 
-          elif [[ ${{ github.event.deployment.environment }} == "QA" ]]; then
+          elif [[ ${{ environment }} == "QA" ]]; then
           echo "DOCKER_REPOSITORY=task-qa" >> $GITHUB_ENV
           echo "PROJECT_NAME=rgv-qa" >> $GITHUB_ENV
 
