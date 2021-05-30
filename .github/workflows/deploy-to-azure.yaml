@@ -1,9 +1,8 @@
 name: Azure Deploy Workflow Test
 
 on:
-  workflow_run:
-   types: 
-      - requested
+  repository_dispatch:
+    types: [azure-event]
   
 env:
   DOCKER_REPOSITORY: foodsvc
