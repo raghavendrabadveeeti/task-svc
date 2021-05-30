@@ -13,7 +13,7 @@ env:
   PORT_TO_BE_EXPOSED: 8080
 
 jobs:
-  deploy:
+  deploy-to-azure:
     runs-on: ubuntu-latest
     steps:
       - name: Load environment variables
