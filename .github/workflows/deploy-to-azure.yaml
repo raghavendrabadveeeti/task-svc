@@ -1,4 +1,4 @@
-name: Azure Deploy Workflow
+name: Azure Deploy Workflow Test
 
 on:
   workflow_dispatch:
