@@ -12,7 +12,7 @@ jobs:
   deploy-to-azure:
     runs-on: ubuntu-latest
     environment:
-      name: 'Dev'
+      name: ${{ github.event.client_payload.environment }}
     steps:
       - uses: hmarr/debug-action@v2
       - name: Load environment variables
