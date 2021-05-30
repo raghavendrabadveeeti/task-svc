@@ -17,6 +17,7 @@ jobs:
       - name: Load environment variables
         run: |
           echo "DEPLOYMENT_API=https://api.github.com/repos/${{ github.repository }}/deployments" >> $GITHUB_ENV
+          echo "DEPLOY_ENVIRONMENT=${{ github.event.deployment.environment }}" >> $GITHUB_ENV
           if [[ ${{ github.event.deployment.environment }} == "Dev" ]]; then
           echo "DOCKER_REPOSITORY=task-dev" >> $GITHUB_ENV
           echo "PROJECT_NAME=rgv-dev" >> $GITHUB_ENV
