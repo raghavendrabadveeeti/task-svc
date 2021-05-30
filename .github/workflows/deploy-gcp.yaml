@@ -61,7 +61,6 @@ jobs:
       - name: Trigger next deployment
         run: |
           echo 'ENV_ID Value ${{ENV_ID}}'
-          echo 'ENV_ID Secret Value ${{ secret.${{ENV_ID}} }}'
           if [[ ${{ github.event.deployment.environment }} == "Dev" ]]; then
             echo 'Triggering QA Deployment'
             curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_TOKEN }}" -H "Content-Type: application/json" --data '{"ref":"master","environment":"QA","required_contexts":[]}' ${{ env.DEPLOYMENT_API }}
