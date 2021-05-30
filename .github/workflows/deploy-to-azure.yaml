@@ -15,6 +15,9 @@ env:
 jobs:
   deploy-to-azure:
     runs-on: ubuntu-latest
+    if: ${{ github.event.deployment.ref == 'master' }}
+    environment:
+       name: ${{ github.event.deployment.environment }}
     steps:
       - name: Load environment variables
         run: |
