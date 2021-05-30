@@ -13,6 +13,7 @@ jobs:
   deploy-to-azure:
     runs-on: ubuntu-latest
     steps:
+      - uses: hmarr/debug-action@v2
       - name: Load environment variables
         run: |
           echo "DEPLOYMENT_REF=https://api.github.com/repos/${{ github.event.deployment.ref  }}" 
