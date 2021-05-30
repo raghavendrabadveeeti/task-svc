@@ -25,18 +25,12 @@ jobs:
           echo "DEPLOYMENT_EN=https://api.github.com/repos/${{ github.event.workflow_run.environment  }}" 
           echo "DEPLOYMENT_DEP=https://api.github.com/repos/${{ github.event.workflow_run.deployment.environment  }}" 
 
-
           echo "DEPLOYMENT_API=https://api.github.com/repos/${{ github.repository }}/deployments" >> $GITHUB_ENV
           echo "DOCKER_REPOSITORY=task-dev" >> $GITHUB_ENV
           echo "PROJECT_NAME=rgv-dev" >> $GITHUB_ENV
 
           echo "DOCKER_REPOSITORY=task-qa" >> $GITHUB_ENV
           echo "PROJECT_NAME=rgv-qa" >> $GITHUB_ENV
-
-          else
-          exit 1
-
-          fi
 
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
