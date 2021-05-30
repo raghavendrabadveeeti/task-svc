@@ -7,10 +7,7 @@ on:
         description: 'Dev QA Prod'
         required: true
         default: 'Dev'
-      ref:
-        description: 'Dev QA Prod'
-        required: false
-        default: 'Dev'
+  
 env:
   DOCKER_REPOSITORY: foodsvc
   PORT_TO_BE_EXPOSED: 8080
