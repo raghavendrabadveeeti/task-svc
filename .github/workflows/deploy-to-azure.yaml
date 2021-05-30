@@ -2,8 +2,8 @@ name: Azure Deploy Workflow Test
 
 on:
   workflow_run:
-    workflows: ["GCP Deploy Workflow"]
-    types: [completed]
+   types: 
+      - requested
   
 env:
   DOCKER_REPOSITORY: foodsvc
