@@ -33,13 +33,6 @@ jobs:
 
           fi
           
-        env:
-         if [[ ${{ github.event.deployment.environment  }} == "Dev" ]]; then
-         ENV_LEVEL:${{ secrets.DEPLOYMENT_API_TOKEN }}
-         elif [[ ${{ github.event.deployment.environment }} == "QA" ]]; then
-         ENV_LEVEL:${{ secrets.DEPLOYMENT_API_TOKEN }}
-         fi      
-
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
       - uses: actions/checkout@v2
