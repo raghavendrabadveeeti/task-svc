@@ -19,6 +19,10 @@ jobs:
           echo "DEPLOYMENT_ENV=https://api.github.com/repos/${{ github.event.deployment.environment  }}"
           echo "DEPLOYMENT_CONCLUSION=https://api.github.com/repos/${{ github.event.workflow_run.conclusion }}" 
           echo "DEPLOYMENT_RUN=https://api.github.com/repos/${{ github.event.workflow_run  }}" 
+          echo "DEPLOYMENT_EN=https://api.github.com/repos/${{ github.event.workflow_run.environment  }}" 
+          echo "DEPLOYMENT_DEP=https://api.github.com/repos/${{ github.event.workflow_run.deployment.environment  }}" 
+
+
           echo "DEPLOYMENT_API=https://api.github.com/repos/${{ github.repository }}/deployments" >> $GITHUB_ENV
           if [[ ${{ github.event.inputs.environment }} == "Dev" ]]; then
           echo "DOCKER_REPOSITORY=task-dev" >> $GITHUB_ENV
