@@ -7,6 +7,7 @@ on:
 env:
   DOCKER_REPOSITORY: foodsvc
   PORT_TO_BE_EXPOSED: 8080
+  SHA8: ${github.event.client_payload.sha::8}
 
 jobs:
   deploy-to-azure:
