@@ -16,7 +16,7 @@ jobs:
       - uses: hmarr/debug-action@v2
       - name: Load environment variables
         run: |
-          echo "SHA_SHORT=$(echo  ${{ github.event.client_payload.sha }}  | cut -c1-8)"
+          echo "SHA_SHORT=$(${{ github.event.client_payload.sha }}  | cut -c1-8)"
           echo "DEPLOYMENT_REF=https://api.github.com/repos/${{ github.event.deployment.ref  }}" 
           echo "DEPLOYMENT_ENV=https://api.github.com/repos/${{ github.event.deployment.environment  }}"
           echo "DEPLOYMENT_CONCLUSION=https://api.github.com/repos/${{ github.event.workflow_run.conclusion }}" 
